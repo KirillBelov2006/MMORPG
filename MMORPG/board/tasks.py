@@ -32,7 +32,7 @@ def respond_accept_send_email(response_id):
 
 
 @shared_task
-def send_mail_monday_8am():
+def send_mail_friday_12am():
     now = timezone.now()
     list_week_posts = list(Post.objects.filter(dateCreation__gte=now - timedelta(days=7)))
     if list_week_posts:
