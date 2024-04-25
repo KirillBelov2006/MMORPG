@@ -1,10 +1,10 @@
 from django import forms
-from .models import Post, Response
+from .models import Announcement, Response
 
 
 class PostForm(forms.ModelForm):
     class Meta:
-        model = Post
+        model = Announcement
         widgets = {'title': forms.TextInput(attrs={'size': '100'})}
         fields = ('category', 'title', 'text',)
 
@@ -12,7 +12,7 @@ class PostForm(forms.ModelForm):
         super(PostForm, self).__init__(*args, **kwargs)
         self.fields['category'].label = "Категория:"
         self.fields['title'].label = "Заголовок"
-        self.fields['text'].label = "Текст объявления:"
+        self.fields['text'].label = "Текст записи:"
 
 
 class RespondForm(forms.ModelForm):
@@ -29,8 +29,8 @@ class ResponsesFilterForm(forms.Form):
     def __init__(self, user, *args, **kwargs):
         super(ResponsesFilterForm, self).__init__(*args, **kwargs)
         self.fields['title'] = forms.ModelChoiceField(
-            label='Объявление',
-            queryset=Post.objects.filter(author_id=user.id).order_by('-dateCreation').values_list('title', flat=True),
+            label='Запись',
+            queryset=Announcement.objects.filter(author_id=user.id).order_by('-dateCreation').values_list('title', flat=True),
             empty_label="Все",
             required=False
         )
