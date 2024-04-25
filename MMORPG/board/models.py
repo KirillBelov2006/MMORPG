@@ -1,29 +1,38 @@
 from django.db import models
 from django.contrib.auth.models import User
-from ckeditor.fields import RichTextField
 
 
-class Post(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    CATEGORIES = (('tanks', 'Танки'),
-           ('healers', 'Хилы'),
-           ('damage_dealers', 'ДД'),
-           ('dealers', 'Торговцы'),
-           ('gildmasters', 'Гилдмастеры'),
-           ('quest_givers', 'Квестгиверы'),
-           ('blacksmiths', 'Кузнецы'),
-           ('tanners', 'Кожевники'),
-           ('potion_makers', 'Зельевары'),
-           ('spell_masters', 'Мастера заклинаний'))
-    category = models.CharField(max_length=15, choices=CATEGORIES, verbose_name='Категория')
-    dateCreation = models.DateTimeField(auto_now_add=True)
-    title = models.CharField(max_length=256, verbose_name='Наименование')
-    text = RichTextField()
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    email_confirmed = models.BooleanField(default=False)
+
+
+class Announcement(models.Model):
+    CATEGORY_CHOICES = [
+        ('Танки', 'Танки'),
+        ('Хилы', 'Хилы'),
+        ('ДД', 'ДД'),
+        ('Торговцы', 'Торговцы'),
+        ('Гилдмастеры', 'Гилдмастеры'),
+        ('Квестгиверы', 'Квестгиверы'),
+        ('Кузнецы', 'Кузнецы'),
+        ('Кожевники', 'Кожевники'),
+        ('Зельевары', 'Зельевары'),
+        ('Мастера заклинаний', 'Мастера заклинаний'),
+    ]
+    title = models.CharField(max_length=100)
+    text = models.TextField()
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
+    owner = models.ForeignKey(User, on_delete=True)
 
 
 class Response(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    text = models.TextField(verbose_name='Текст')
-    status = models.BooleanField(default=False)
-    dateCreation = models.DateTimeField(auto_now_add=True)
+    text = models.TextField()
+    announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE, related_name='responses')
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class ConfirmationCode(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    code = models.CharField(max_length=20)
+    created_at = models.DateTimeField(auto_now_add=True)
