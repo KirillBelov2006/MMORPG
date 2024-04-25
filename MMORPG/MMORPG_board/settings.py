@@ -201,8 +201,9 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-MEDIA_ROOT = 'media/'  # Путь где хранятся файлы
-MEDIA_URL = '/media/'  # Ссылка по которой будет обращение от основного хоста
+MEDIA_ROOT = 'media/'  
+MEDIA_URL = '/media/' 
+
 
 
 
@@ -213,19 +214,20 @@ LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 ACCOUNT_SIGNUP_REDIRECT_URL = "/accounts/profile"
 
-EMAIL_HOST_USER = "newsportal272@gmail.com"
-# EMAIL_HOST_PASSWORD = "DkjhJsgdaGHjsjjLlkja2133623"
-EMAIL_HOST_PASSWORD = "octumypgqjnuucnt"
+EMAIL_HOST_USER = "kirill.belov2043@mail.ru"
+EMAIL_HOST_PASSWORD = "1283389010KLj"
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'quiz.nightmare@mail.ru'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST_USER = 'kirill.belov2043@mail.ru'
+EMAIL_HOST_PASSWORD = '1283389010KLj'
 
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
